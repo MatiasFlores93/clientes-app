@@ -4,14 +4,12 @@ import { Cliente } from './cliente';
 import {  of, Observable } from 'rxjs';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class ClienteService {
 
   constructor() { }
   getClientes(): Observable<Cliente []>{
     return of (CLIENTES);
-
   }
 }

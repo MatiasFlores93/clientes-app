@@ -17,10 +17,10 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.clienteService.getClientes().subscribe(
-      //funcion anonima (cliente) => this.cliente = clientes
-      function (clientes){
-        this.clientes=clientes;
-      }
+      clientes => this.clientes = clientes
+    // funcion anonima  function (clientes){
+    //    this.clientes=clientes;
+
     );
   }
 
