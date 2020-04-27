@@ -13,9 +13,11 @@ export class FormComponent implements OnInit {
   public cliente: Cliente = new Cliente()
   public titulo:string = "Crear Cliente"
 
+  public errores: string[];
+
   constructor(private clienteService: ClienteService,
   private router: Router,
-private activatedRoute: ActivatedRoute) { }
+  private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.cargarCliente()
@@ -32,19 +34,29 @@ private activatedRoute: ActivatedRoute) { }
 
   create(): void {
     this.clienteService.create(this.cliente)
-      .subscribe(cliente => {
+      .subscribe(json => {
         this.router.navigate(['/clientes'])
-        swal('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success')
+        swal('Nuevo cliente', `${json.mensaje}: ${json.cliente.nombre}`, 'success')
+      },
+      err =>{
+        this.errores = err.error.errors as string[];
+        console.error('Codigo del error desde el backend: ' + err.status); 
+        console.error(err.error.errors);
       }
       );
   }
 
   update():void{
     this.clienteService.update(this.cliente)
-    .subscribe( cliente => {
+    .subscribe( json => {
       this.router.navigate(['/clientes'])
         //llamado  a la alerta (nombre/ contenido/ tipo de alerta )
-      swal('Cliente Actualizado', `Cliente ${cliente.nombre} actualizado con éxito!`, 'success')
+      swal('Cliente Actualizado',`${json.mensaje}: ${json.cliente.nombre}`, 'success')
+    }, 
+    err =>{
+      this.errores = err.error.errors as string[];
+      console.error('Codigo del error desde el backend: ' + err.status); 
+      console.error(err.error.errors);
     }
     )
   }
