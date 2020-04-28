@@ -7,7 +7,9 @@
         Crear Cliente
       </button>
     </div>
-    <div *ngIf="clientes?.length == 0" class="alert alert-info">No hay registros en la base de datos</div>
+    <div *ngIf="clientes?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
     <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
       <thead>
         <tr>
@@ -24,7 +26,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes">
-          <td>{{ cliente.id }}</td>
+          <td><button type="button" [routerLink]="['/clientes/ver', cliente.id]" class="btn btn-success btn-sm">{{ cliente.id }}</button></td>
           <td>{{ cliente.nombre }}</td>
           <td>{{ cliente.apellido | uppercase}}</td>
           <td>{{ cliente.email }}</td>
@@ -39,6 +41,6 @@
         </tr>
       </tbody>
     </table>
-
+    <paginator-nav *ngIf="paginador" [paginador]="paginador"></paginator-nav>
   </div>
 </div>
